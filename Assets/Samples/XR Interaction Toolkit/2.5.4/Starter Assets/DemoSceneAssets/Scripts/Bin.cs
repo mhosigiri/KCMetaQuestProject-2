@@ -3,6 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class Bin : MonoBehaviour
 {
+    private AudioSource audioSource;
     private Timer timer;
     private XRSocketInteractor interactor;
     private ObjectInstantiator objectInstantiator;
@@ -13,6 +14,7 @@ public class Bin : MonoBehaviour
         interactor = GetComponent<XRSocketInteractor>();
         objectInstantiator = FindObjectOfType<ObjectInstantiator>();
         interactor.selectEntered.AddListener(ObjectPlaced);
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void ObjectPlaced(SelectEnterEventArgs a)
@@ -27,5 +29,10 @@ public class Bin : MonoBehaviour
             Debug.LogWarning("ObjectInstantiator not found in the scene.");
         }
         Destroy(a.interactableObject.transform.gameObject, 1.0f);
+
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
     }
 }

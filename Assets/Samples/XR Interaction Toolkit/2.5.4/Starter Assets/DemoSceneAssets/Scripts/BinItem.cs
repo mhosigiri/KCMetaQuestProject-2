@@ -3,6 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class BinItem : MonoBehaviour
 {
+    private AudioSource audioSource;
     private Timer timer;
     private XRGrabInteractable interactable;
 
@@ -11,6 +12,7 @@ public class BinItem : MonoBehaviour
         timer = FindObjectOfType<Timer>();
         interactable = GetComponent<XRGrabInteractable>();
         interactable.selectEntered.AddListener(ObjectGrabbed);
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void ObjectGrabbed(SelectEnterEventArgs a)
@@ -20,5 +22,10 @@ public class BinItem : MonoBehaviour
             return;
         }
         timer.StartTimer();
+
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
     }
 }
